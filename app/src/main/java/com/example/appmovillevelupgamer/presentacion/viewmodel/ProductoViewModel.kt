@@ -25,14 +25,14 @@ class ProductoViewModel(
     }
 
     private fun cargarProductosEjemplo() {
-        productos = repo.obtenerProductosEjemplo()
+        productos = repo.productosDeEjemplo()
     }
 
     fun cargarDesdeBackend() {
         viewModelScope.launch {
             try {
                 cargando = true
-                productos = repo.obtenerProductosDesdeApi()
+                productos = repo.obtenerProductos()
             } catch (e: Exception) {
                 error = e.message
             } finally {

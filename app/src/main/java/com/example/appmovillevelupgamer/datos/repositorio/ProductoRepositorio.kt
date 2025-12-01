@@ -7,17 +7,17 @@ class ProductoRepositorio {
 
     private val api = ClienteRetrofit.api
 
-    // Cuando conectemos backend, usamos esto:
-    suspend fun obtenerProductosDesdeApi(): List<Producto> {
+    // 👉 Cuando conectemos al backend
+    suspend fun obtenerProductos(): List<Producto> {
         return api.obtenerProductos()
     }
 
-    // Por ahora usamos datos de ejemplo:
-    fun obtenerProductosEjemplo(): List<Producto> {
+    // 👉 Datos de prueba
+    fun productosDeEjemplo(): List<Producto> {
         return listOf(
-            Producto(1, "Mouse Gamer RGB", 25000, 10),
-            Producto(2, "Teclado Mecánico", 45000, 5),
-            Producto(3, "Silla Gamer Pro", 150000, 2)
+            Producto(1, "Catan", "Estrategia", 29990, 50, "catan.png", "juegos-de-mesa"),
+            Producto(2, "Carcassonne", "Medieval", 24990, 40, "carcassonne.jpg", "juegos-de-mesa"),
+            Producto(3, "PS5", "Consola next-gen", 549990, 20, "ps5.jpg", "consolas")
         )
     }
 }
