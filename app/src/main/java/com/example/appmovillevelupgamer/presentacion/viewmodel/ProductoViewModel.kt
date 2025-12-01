@@ -21,14 +21,10 @@ class ProductoViewModel(
         private set
 
     init {
-        cargarProductosEjemplo()
+        cargarProductos()
     }
 
-    private fun cargarProductosEjemplo() {
-        productos = repo.productosDeEjemplo()
-    }
-
-    fun cargarDesdeBackend() {
+    fun cargarProductos() {
         viewModelScope.launch {
             try {
                 cargando = true

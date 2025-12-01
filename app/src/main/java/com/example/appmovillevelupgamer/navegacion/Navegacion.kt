@@ -5,7 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.appmovillevelupgamer.presentacion.pantallas.PantallaInicio
-import com.example.appmovillevelupgamer.presentacion.pantallas.ProductosPantalla
+import com.example.appmovillevelupgamer.presentacion.pantallas.ListaProductosPantalla
 
 @Composable
 fun Navegacion() {
@@ -14,17 +14,19 @@ fun Navegacion() {
 
     NavHost(
         navController = navController,
-        startDestination = "inicio"
+        startDestination = "inicio"   // ← AHORA SÍ parte en la pantalla de inicio
     ) {
 
+        // 🟣 Pantalla de bienvenida
         composable("inicio") {
-            PantallaInicio(onContinuar = {
-                navController.navigate("catalogo")
-            })
+            PantallaInicio(
+                onContinuar = { navController.navigate("catalogo") }
+            )
         }
 
+        // 🟦 Catálogo de productos
         composable("catalogo") {
-            ProductosPantalla()
+            ListaProductosPantalla()
         }
     }
 }
