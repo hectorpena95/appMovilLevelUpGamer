@@ -4,11 +4,7 @@ import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,9 +19,9 @@ import com.example.appmovillevelupgamer.R
 
 @Composable
 fun PantallaInicio(
-    onContinuar: () -> Unit
+    onExplorarCatalogo: () -> Unit,
+    onIniciarSesion: () -> Unit
 ) {
-    // Animación de "latido"
     val scaleAnim = rememberInfiniteTransition()
     val scale by scaleAnim.animateFloat(
         initialValue = 0.95f,
@@ -36,12 +32,11 @@ fun PantallaInicio(
         )
     )
 
-    // Fondo degradado gamer
     val fondoGamer = Brush.verticalGradient(
-        colors = listOf(
-            Color(0xFF4500A0), // púrpura intenso
-            Color(0xFF8B00F6), // violeta neón
-            Color(0xFF0D0D0D)  // negro
+        listOf(
+            Color(0xFF4500A0),
+            Color(0xFF8B00F6),
+            Color(0xFF0D0D0D)
         )
     )
 
@@ -51,58 +46,48 @@ fun PantallaInicio(
             .background(fondoGamer),
         contentAlignment = Alignment.Center
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(24.dp)
-        ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
-            // LOGO O IMAGEN
+            // 🔥 TU LOGO PERSONALIZADO AQUÍ
             Image(
-                painter = painterResource(id = R.drawable.ic_launcher_foreground),
-                contentDescription = "Logo",
+                painter = painterResource(id = R.drawable.logo_levelup),
+                contentDescription = "Logo LevelUpGamer",
                 modifier = Modifier
                     .size(160.dp)
-                    .scale(scale) // animación
+                    .scale(scale)
             )
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // TÍTULO
-            Text(
-                text = "LEVEL UP GAMER",
-                fontSize = 32.sp,
-                fontWeight = FontWeight.ExtraBold,
-                color = Color.White
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            // SUBTÍTULO
-            Text(
-                text = "Tu tienda gamer definitiva",
-                fontSize = 18.sp,
-                color = Color(0xFFFFD2FA)
-            )
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            // BOTÓN GAMER
             Button(
-                onClick = onContinuar,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color(0xFF00E5FF), // cian neón
-                    contentColor = Color.Black
-                ),
-                shape = RoundedCornerShape(12.dp),
+                onClick = onExplorarCatalogo,
                 modifier = Modifier
-                    .fillMaxWidth(0.7f)
-                    .height(50.dp)
-            ) {
-                Text(
-                    text = "Entrar al Catálogo",
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
+                    .fillMaxWidth(0.75f)
+                    .height(50.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFF00E5FF),
+                    contentColor = Color.Black
                 )
+            ) {
+                Text("Explorar Catálogo", fontSize = 18.sp)
+            }
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            Button(
+                onClick = onIniciarSesion,
+                modifier = Modifier
+                    .fillMaxWidth(0.75f)
+                    .height(50.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFFFF4DFF),
+                    contentColor = Color.Black
+                )
+            ) {
+                Text("Iniciar Sesión", fontSize = 18.sp)
             }
         }
     }

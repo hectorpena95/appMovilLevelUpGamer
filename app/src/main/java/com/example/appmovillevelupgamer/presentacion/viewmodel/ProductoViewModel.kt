@@ -11,6 +11,9 @@ class ProductoViewModel(
     private val repo: ProductoRepositorio = ProductoRepositorio()
 ) : ViewModel() {
 
+    // -------------------------------
+    // LISTA DE PRODUCTOS
+    // -------------------------------
     var productos by mutableStateOf<List<Producto>>(emptyList())
         private set
 
@@ -20,10 +23,23 @@ class ProductoViewModel(
     var error by mutableStateOf<String?>(null)
         private set
 
+    // -------------------------------
+    // CARRITO DE COMPRAS
+    // -------------------------------
+    private val _carrito = mutableStateListOf<Producto>()
+    val carrito: List<Producto> get() = _carrito
+
+    // Total en tiempo real
+    val totalCarrito: Int
+        get() = _carrito.sumOf { it.precio }
+
     init {
         cargarProductos()
     }
 
+    // -------------------------------
+    // CARGA DE PRODUCTOS
+    // -------------------------------
     fun cargarProductos() {
         viewModelScope.launch {
             try {
@@ -35,5 +51,21 @@ class ProductoViewModel(
                 cargando = false
             }
         }
+    }
+
+    // -------------------------------
+    // FUNCIONES DEL CARRITO
+    // -------------------------------
+
+    fun agregarAlCarrito(producto: Producto) {
+        _carrito.add(producto)
+    }
+
+    fun eliminarDelCarrito(producto: Producto) {
+        _carrito.remove(producto)
+    }
+
+    fun limpiarCarrito() {
+        _carrito.clear()
     }
 }
