@@ -14,17 +14,14 @@ fun Navegacion() {
 
     NavHost(
         navController = navController,
-        startDestination = "inicio"   // ← AHORA SÍ parte en la pantalla de inicio
     ) {
 
-        // 🟣 Pantalla de bienvenida
         composable("inicio") {
             PantallaInicio(
                 onContinuar = { navController.navigate("catalogo") }
             )
         }
 
-        // 🟦 Catálogo de productos
         composable("catalogo") {
             ListaProductosPantalla()
         }
