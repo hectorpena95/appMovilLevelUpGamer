@@ -15,13 +15,21 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.appmovillevelupgamer.R
+import com.example.appmovillevelupgamer.presentacion.viewmodel.ClimaViewModel
 
 @Composable
 fun PantallaInicio(
     onExplorarCatalogo: () -> Unit,
     onIniciarSesion: () -> Unit
 ) {
+    val climaVM: ClimaViewModel = viewModel()
+
+    LaunchedEffect(true) {
+        climaVM.cargarClima()
+    }
+
     val scaleAnim = rememberInfiniteTransition()
     val scale by scaleAnim.animateFloat(
         initialValue = 0.95f,
@@ -46,9 +54,13 @@ fun PantallaInicio(
             .background(fondoGamer),
         contentAlignment = Alignment.Center
     ) {
-        Column(horizontalAlignment = Alignment.CenterHorizontally) {
 
-            // 🔥 TU LOGO PERSONALIZADO AQUÍ
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.fillMaxSize()
+        ) {
+
+            // Logo animado
             Image(
                 painter = painterResource(id = R.drawable.logo_levelup),
                 contentDescription = "Logo LevelUpGamer",
@@ -59,9 +71,7 @@ fun PantallaInicio(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-
-            Spacer(modifier = Modifier.height(40.dp))
-
+            // BOTÓN 1
             Button(
                 onClick = onExplorarCatalogo,
                 modifier = Modifier
@@ -77,6 +87,7 @@ fun PantallaInicio(
 
             Spacer(modifier = Modifier.height(20.dp))
 
+            // BOTÓN 2
             Button(
                 onClick = onIniciarSesion,
                 modifier = Modifier
@@ -88,6 +99,44 @@ fun PantallaInicio(
                 )
             ) {
                 Text("Iniciar Sesión", fontSize = 18.sp)
+            }
+
+            Spacer(modifier = Modifier.height(35.dp))
+
+            // 🔥 SECCIÓN CLIMA
+            Text(
+                "Clima Actual",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            when {
+                climaVM.cargando -> {
+                    Text("Cargando clima...", color = Color.White)
+                }
+
+                climaVM.error != null -> {
+                    Text(
+                        text = "Error: ${climaVM.error}",
+                        color = Color.Red,
+                        fontSize = 16.sp
+                    )
+                }
+
+                climaVM.clima != null -> {
+                    Text(
+                        "Temperatura: ${climaVM.clima!!.temperature}°C",
+                        color = Color.White,
+                        fontSize = 18.sp
+                    )
+                    Text(
+                        "Viento: ${climaVM.clima!!.windspeed} km/h",
+                        color = Color.White
+                    )
+                }
             }
         }
     }

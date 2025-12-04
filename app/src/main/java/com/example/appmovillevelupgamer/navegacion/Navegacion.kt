@@ -74,5 +74,6 @@ fun Navegacion(
                 vm = carritoVM
             )
         }
+
     }
 }

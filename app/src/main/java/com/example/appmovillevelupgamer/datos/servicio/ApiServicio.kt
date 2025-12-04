@@ -11,4 +11,6 @@ interface ApiServicio {
 
     @GET("productos/{id}")
     suspend fun obtenerProducto(@Path("id") id: Long): Producto
+
+
 }
