@@ -11,8 +11,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
 import com.example.appmovillevelupgamer.presentacion.viewmodel.CarritoViewModel
 
 @Composable
@@ -40,8 +41,6 @@ fun CarritoPantalla(
                 .padding(16.dp)
         ) {
 
-
-
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
@@ -52,7 +51,6 @@ fun CarritoPantalla(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Lista del carrito
             LazyColumn(
                 modifier = Modifier.weight(1f)
             ) {
@@ -66,29 +64,45 @@ fun CarritoPantalla(
                             containerColor = Color(0xFF1A1A1A)
                         )
                     ) {
-                        Column(Modifier.padding(16.dp)) {
 
-                            Text(
-                                producto.nombre,
-                                color = Color.White,
-                                style = MaterialTheme.typography.titleLarge
+                        Row(
+                            modifier = Modifier.padding(16.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+
+                            // MINIATURA
+                            AsyncImage(
+                                model = producto.urlImagen,
+                                contentDescription = producto.nombre,
+                                modifier = Modifier
+                                    .size(80.dp)
+                                    .padding(end = 12.dp)
                             )
 
-                            Text(
-                                "$${producto.precio}",
-                                color = Color.Cyan
-                            )
+                            Column(Modifier.weight(1f)) {
 
-                            Spacer(Modifier.height(8.dp))
-
-                            Button(
-                                onClick = { vm.eliminarProducto(producto) },
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = Color.Red,
-                                    contentColor = Color.White
+                                Text(
+                                    producto.nombre,
+                                    color = Color.White,
+                                    style = MaterialTheme.typography.titleLarge
                                 )
-                            ) {
-                                Text("Eliminar")
+
+                                Text(
+                                    "$${producto.precio}",
+                                    color = Color.Cyan
+                                )
+
+                                Spacer(Modifier.height(8.dp))
+
+                                Button(
+                                    onClick = { vm.eliminarProducto(producto) },
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = Color.Red,
+                                        contentColor = Color.White
+                                    )
+                                ) {
+                                    Text("Eliminar")
+                                }
                             }
                         }
                     }
@@ -110,7 +124,6 @@ fun CarritoPantalla(
 
                 Button(
                     onClick = {
-                        // Aquí puedes llamar al backend cuando tengas el endpoint
                         vm.limpiarCarrito()
                         navController.navigate("productos")
                     },
